@@ -293,7 +293,7 @@ class DiscordWebSocket:
         _max_heartbeat_timeout: float
 
     # fmt: off
-    DEFAULT_GATEWAY    = os.environ.get('DISCORD_GATEWAY_ENDPOINT', 'wss://gateway.discord.gg/?v=6&encoding=json')
+    DEFAULT_GATEWAY    = yarl.URL(os.environ.get('DISCORD_GATEWAY_ENDPOINT', 'wss://gateway.discord.gg/?v=6&encoding=json'))
     DISPATCH           = 0
     HEARTBEAT          = 1
     IDENTIFY           = 2
@@ -364,7 +364,7 @@ class DiscordWebSocket:
         from .http import INTERNAL_API_VERSION
 
         if os.environ.get("DISCORD_GATEWAY_ENDPOINT"):
-          gateway = os.environ.get("DISCORD_GATEWAY_ENDPOINT")
+          gateway = yarl.URL(os.environ.get("DISCORD_GATEWAY_ENDPOINT"))
         else:
           gateway = gateway or cls.DEFAULT_GATEWAY
 
