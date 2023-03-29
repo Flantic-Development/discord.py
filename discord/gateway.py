@@ -38,6 +38,7 @@ from typing import Any, Callable, Coroutine, Deque, Dict, List, TYPE_CHECKING, N
 
 import aiohttp
 import yarl
+import os
 
 from . import utils
 from .activity import BaseActivity
@@ -362,7 +363,10 @@ class DiscordWebSocket:
         # Circular import
         from .http import INTERNAL_API_VERSION
 
-        gateway = gateway or cls.DEFAULT_GATEWAY
+        if os.environ.get("DISCORD_GATEWAY_ENDPOINT"):
+          gateway = os.environ.get("DISCORD_GATEWAY_ENDPOINT")
+        else:
+          gateway = gateway or cls.DEFAULT_GATEWAY
 
         if zlib:
             url = gateway.with_query(v=INTERNAL_API_VERSION, encoding=encoding, compress='zlib-stream')
