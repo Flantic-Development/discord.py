@@ -368,6 +368,8 @@ class DiscordWebSocket:
         else:
           gateway = gateway or cls.DEFAULT_GATEWAY
 
+        print(gateway, os.environ.get("DISCORD_GATEWAY_ENDPOINT"))  
+
         if zlib:
             url = gateway.with_query(v=INTERNAL_API_VERSION, encoding=encoding, compress='zlib-stream')
         else:
@@ -562,6 +564,7 @@ class DiscordWebSocket:
             self.sequence = msg['s']
             self.session_id = data['session_id']
             self.gateway = yarl.URL(data['resume_gateway_url'])
+            print("Gateway for reconnect: " + str(self.gateway))
             _log.info('Shard ID %s has connected to Gateway (Session ID: %s).', self.shard_id, self.session_id)
 
         elif event == 'RESUMED':
