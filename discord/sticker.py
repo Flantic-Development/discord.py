@@ -399,7 +399,7 @@ class GuildSticker(Sticker):
         The description of the sticker.
     format: :class:`StickerFormatType`
         The format for the sticker's image.
-    available: :class:`bool`
+    available: Optional[:class:`bool`]
         Whether this sticker is available for use.
     guild_id: :class:`int`
         The ID of the guild that this sticker is from.
@@ -414,7 +414,7 @@ class GuildSticker(Sticker):
 
     def _from_data(self, data: GuildStickerPayload) -> None:
         super()._from_data(data)
-        self.available: bool = data['available']
+        self.available: Optional[bool] = data.get('available')
         self.guild_id: int = int(data['guild_id'])
         user = data.get('user')
         self.user: Optional[User] = self._state.store_user(user) if user else None
